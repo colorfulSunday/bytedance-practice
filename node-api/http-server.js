@@ -5,17 +5,17 @@
   const readFile = promisify(fs.readFile);
 
   http
-    .createServer((request, response) => {
+    .createServer(async (request, response) => {
       const { url, method } = request;
       if (url === '/' && method === 'GET') {
         try {
-          const data = await readFile('index.html');
+          const data = await readFile('./node-api/index.html');
           response.statusCode = 200;
           response.setHeader('Content-Type', 'text/html');
           response.end(data);
         } catch (err) {
           response.statusCode = 500;
-          response.setHeader('Content-Type', 'text/plain;charset=urt-8');
+          response.setHeader('Content-Type', 'text/plain;charset=utf-8');
           response.end('500 服务器内部错误');
         }
       }
